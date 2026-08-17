@@ -1,0 +1,1219 @@
+{
+  "info": {
+    "_postman_id": "83cd108f-0f40-4b31-b209-9f9b421c6abd",
+    "name": "The_Movie_Database_Api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40287742",
+    "_collection_link": "https://go.postman.co/collection/40287742-83cd108f-0f40-4b31-b209-9f9b421c6abd?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "MovieBYId",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Movie contains title\", function () {\r",
+              "    pm.expect(response).to.have.property(\"title\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Movie contains overview\", function () {\r",
+              "    pm.expect(response).to.have.property(\"overview\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Movie contains release_date\", function () {\r",
+              "    pm.expect(response).to.have.property(\"release_date\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Movie contains runtime\", function () {\r",
+              "    pm.expect(response).to.have.property(\"runtime\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Genres array is not empty\", function () {\r",
+              "    pm.expect(response).to.have.property(\"genres\");\r",
+              "    pm.expect(response.genres).to.be.an(\"array\").that.is.not.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Production companies array is present\", function () {\r",
+              "    pm.expect(response).to.have.property(\"production_companies\");\r",
+              "    pm.expect(response.production_companies).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Budget field exists\", function () {\r",
+              "    pm.expect(response).to.have.property(\"budget\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Revenue field exists\", function () {\r",
+              "    pm.expect(response).to.have.property(\"revenue\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASEURL}}/movie/18",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "movie",
+            "18"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Movies by Keyword",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response contains results array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"results\");\r",
+              "    pm.expect(response.results).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Total results is greater than 0\", function () {\r",
+              "    pm.expect(response.total_results).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Movie titles are relevant to the search keyword\", function () {\r",
+              "    const keyword = \"inception\";\r",
+              "\r",
+              "    response.results.forEach(movie => {\r",
+              "        pm.expect(movie.title.toLowerCase()).to.include(keyword);\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each movie contains required fields\", function () {\r",
+              "    response.results.forEach(movie => {\r",
+              "        pm.expect(movie).to.have.property(\"id\");\r",
+              "        pm.expect(movie).to.have.property(\"title\");\r",
+              "        pm.expect(movie).to.have.property(\"release_date\");\r",
+              "        pm.expect(movie).to.have.property(\"overview\");\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/search/movie?query=inception&language=en-US",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "search",
+            "movie"
+          ],
+          "query": [
+            {
+              "key": "query",
+              "value": "inception"
+            },
+            {
+              "key": "language",
+              "value": "en-US"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TV Shows by Name",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response contains results array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"results\");\r",
+              "    pm.expect(response.results).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Results are not empty\", function () {\r",
+              "    pm.expect(response.results.length).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Results contain at least one TV show\", function () {\r",
+              "    pm.expect(response.results).to.have.lengthOf.at.least(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each result contains required fields\", function () {\r",
+              "    response.results.forEach(show => {\r",
+              "        pm.expect(show).to.have.property(\"id\");\r",
+              "        pm.expect(show).to.have.property(\"name\");\r",
+              "        pm.expect(show).to.have.property(\"first_air_date\");\r",
+              "        pm.expect(show).to.have.property(\"overview\");\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/search/tv?query=breaking+bad&language=en-US",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "search",
+            "tv"
+          ],
+          "query": [
+            {
+              "key": "query",
+              "value": "breaking+bad"
+            },
+            {
+              "key": "language",
+              "value": "en-US"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Movie Credits (Cast & Crew)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response contains cast array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"cast\");\r",
+              "    pm.expect(response.cast).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains crew array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"crew\");\r",
+              "    pm.expect(response.crew).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cast list is not empty\", function () {\r",
+              "    pm.expect(response.cast).to.be.an(\"array\").that.is.not.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each cast member contains required fields\", function () {\r",
+              "    response.cast.forEach(member => {\r",
+              "        pm.expect(member).to.have.property(\"id\");\r",
+              "        pm.expect(member).to.have.property(\"name\");\r",
+              "        pm.expect(member).to.have.property(\"character\");\r",
+              "        pm.expect(member).to.have.property(\"order\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each crew member contains required fields\", function () {\r",
+              "    response.crew.forEach(member => {\r",
+              "        pm.expect(member).to.have.property(\"id\");\r",
+              "        pm.expect(member).to.have.property(\"name\");\r",
+              "        pm.expect(member).to.have.property(\"job\");\r",
+              "        pm.expect(member).to.have.property(\"department\");\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/movie/18/credits",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "movie",
+            "18",
+            "credits"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Popular Movies",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response contains results array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"results\");\r",
+              "    pm.expect(response.results).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Results contain 20 movies per page\", function () {\r",
+              "    pm.expect(response.results).to.have.lengthOf(20);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains pagination fields\", function () {\r",
+              "    pm.expect(response).to.have.property(\"page\");\r",
+              "    pm.expect(response).to.have.property(\"total_pages\");\r",
+              "    pm.expect(response).to.have.property(\"total_results\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Page number is 1\", function () {\r",
+              "    pm.expect(response.page).to.eql(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each movie contains required fields\", function () {\r",
+              "    response.results.forEach(movie => {\r",
+              "        pm.expect(movie).to.have.property(\"id\");\r",
+              "        pm.expect(movie).to.have.property(\"title\");\r",
+              "        pm.expect(movie).to.have.property(\"vote_average\");\r",
+              "        pm.expect(movie).to.have.property(\"popularity\");\r",
+              "\r",
+              "       // pm.expect(movie.popularity).to.be.a(\"number\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Movies are sorted by popularity descending\", function () {\r",
+              "    const popularityValues = response.results.map(movie => movie.popularity);\r",
+              "\r",
+              "    for (let i = 0; i <popularityValues.length - 1; i++) {\r",
+              "if (popularityValues[i] < popularityValues[i+1]) {\r",
+              "console.log(`movie at index ${i} is not greater than the movie at index ${i+1}`);\r",
+              "\r",
+              "pm.expect.fail(\r",
+              "                `Movies are not sorted by popularity descending at index ${i}`\r",
+              "            );\r",
+              "\r",
+              "}\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "else {\r",
+              "\r",
+              "        pm.expect(popularityValues[i]).to.be.at.least(popularityValues[i+1]);\r",
+              "    }}\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/movie/popular?language=en-US&page=1",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "movie",
+            "popular"
+          ],
+          "query": [
+            {
+              "key": "language",
+              "value": "en-US"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TV Show Details by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"TV show contains name\", function () {\r",
+              "    pm.expect(response).to.have.property(\"name\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TV show contains overview\", function () {\r",
+              "    pm.expect(response).to.have.property(\"overview\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TV show contains first_air_date\", function () {\r",
+              "    pm.expect(response).to.have.property(\"first_air_date\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TV show contains number_of_seasons\", function () {\r",
+              "    pm.expect(response).to.have.property(\"number_of_seasons\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Genres array is not empty\", function () {\r",
+              "    pm.expect(response).to.have.property(\"genres\");\r",
+              "    pm.expect(response.genres).to.be.an(\"array\").that.is.not.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Episode run time field exists\", function () {\r",
+              "    pm.expect(response).to.have.property(\"episode_run_time\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Networks array is present\", function () {\r",
+              "    pm.expect(response).to.have.property(\"networks\");\r",
+              "    pm.expect(response.networks).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Created by array is present\", function () {\r",
+              "    pm.expect(response).to.have.property(\"created_by\");\r",
+              "    pm.expect(response.created_by).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/tv/18",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "tv",
+            "18"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Movie Genres List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response contains genres array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"genres\");\r",
+              "    pm.expect(response.genres).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Genres list is not empty\", function () {\r",
+              "    pm.expect(response.genres).to.be.an(\"array\").that.is.not.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Action, Comedy, and Drama genres are present\", function () {\r",
+              "    const genreNames = response.genres.map(genre => genre.name);\r",
+              "\r",
+              "    pm.expect(genreNames).to.include(\"Action\");\r",
+              "    pm.expect(genreNames).to.include(\"Comedy\");\r",
+              "    pm.expect(genreNames).to.include(\"Drama\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each genre contains id and name\", function () {\r",
+              "    response.genres.forEach(genre => {\r",
+              "        pm.expect(genre).to.have.property(\"id\");\r",
+              "        pm.expect(genre).to.have.property(\"name\");\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/genre/movie/list?language=en",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "genre",
+            "movie",
+            "list"
+          ],
+          "query": [
+            {
+              "key": "language",
+              "value": "en"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Discover Movies by Genre",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "const genreId = 28;\r",
+              "\r",
+              "pm.test(\"Response contains results array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"results\");\r",
+              "    pm.expect(response.results).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each movie contains required fields\", function () {\r",
+              "    response.results.forEach(movie => {\r",
+              "        pm.expect(movie).to.have.property(\"id\");\r",
+              "        pm.expect(movie).to.have.property(\"title\");\r",
+              "        pm.expect(movie).to.have.property(\"genre_ids\");\r",
+              "        pm.expect(movie).to.have.property(\"vote_average\");\r",
+              "\r",
+              "        pm.expect(movie.genre_ids).to.be.an(\"array\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each movie belongs to the requested genre\", function () {\r",
+              "    response.results.forEach(movie => {\r",
+              "        pm.expect(movie.genre_ids).to.include(genreId);\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains pagination fields\", function () {\r",
+              "    pm.expect(response).to.have.property(\"page\");\r",
+              "    pm.expect(response).to.have.property(\"total_pages\");\r",
+              "    pm.expect(response).to.have.property(\"total_results\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/discover/movie?with_genres=28&sort_by=popularity.desc",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "discover",
+            "movie"
+          ],
+          "query": [
+            {
+              "key": "with_genres",
+              "value": "28"
+            },
+            {
+              "key": "sort_by",
+              "value": "popularity.desc"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Now Playing Movies  Now Playing Movies",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response contains results array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"results\");\r",
+              "    pm.expect(response.results).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains dates object\", function () {\r",
+              "    pm.expect(response).to.have.property(\"dates\");\r",
+              "    pm.expect(response.dates).to.be.an(\"object\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Dates object contains maximum and minimum\", function () {\r",
+              "    pm.expect(response.dates).to.have.property(\"maximum\");\r",
+              "    pm.expect(response.dates).to.have.property(\"minimum\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each movie contains required fields\", function () {\r",
+              "    response.results.forEach(movie => {\r",
+              "        pm.expect(movie).to.have.property(\"id\");\r",
+              "        pm.expect(movie).to.have.property(\"title\");\r",
+              "        pm.expect(movie).to.have.property(\"release_date\");\r",
+              "        pm.expect(movie).to.have.property(\"vote_count\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Movie release dates are within the valid date range\", function () {\r",
+              "    const minimumDate = new Date(response.dates.minimum);\r",
+              "    const maximumDate = new Date(response.dates.maximum);\r",
+              "\r",
+              "    response.results.forEach(movie => {\r",
+              "        const releaseDate = new Date(movie.release_date);\r",
+              "\r",
+              "        pm.expect(\r",
+              "            releaseDate >= minimumDate && releaseDate <= maximumDate\r",
+              "        ).to.be.true;\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/movie/now_playing?language=en-US&page=1",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "movie",
+            "now_playing"
+          ],
+          "query": [
+            {
+              "key": "language",
+              "value": "en-US"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Person Details (Actor/Director)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 OK\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Person contains name\", function () {\r",
+              "    pm.expect(response).to.have.property(\"name\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Person contains biography\", function () {\r",
+              "    pm.expect(response).to.have.property(\"biography\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Person contains birthday\", function () {\r",
+              "    pm.expect(response).to.have.property(\"birthday\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Person contains place_of_birth\", function () {\r",
+              "    pm.expect(response).to.have.property(\"place_of_birth\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Person contains known_for_department\", function () {\r",
+              "    pm.expect(response).to.have.property(\"known_for_department\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Popularity is a number\", function () {\r",
+              "    pm.expect(response.popularity).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Person contains also_known_as array\", function () {\r",
+              "    pm.expect(response).to.have.property(\"also_known_as\");\r",
+              "    pm.expect(response.also_known_as).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{BASEURL}}/person/1",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "person",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Movie to Watchlis",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 Created or 200 OK\", function () {\r",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Response contains success: true\", function () {\r",
+              "    pm.expect(response).to.have.property(\"success\");\r",
+              "    pm.expect(response.success).to.eql(true);\r",
+              "});\r",
+              "pm.test(\"Request contains correct media type and media ID\", function () {\r",
+              "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "\r",
+              "    pm.expect(requestBody.media_type).to.eql(\"movie\");\r",
+              "    pm.expect(requestBody.media_id).to.eql(18);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Status message confirms the item was added\", function () {\r",
+              "    pm.expect(response).to.have.property(\"status_message\");\r",
+              "    pm.expect(response.status_message).to.be.a(\"string\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "AccesokenAuth",
+              "type": "string"
+            },
+            {
+              "key": "in",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNDEwMGQ5MjZhM2RmNDZjZTA2ODliMDc5ZjJjMmE3MCIsIm5iZiI6MTc4Njk2NzkzMy45NTYsInN1YiI6IjZhODJmNzdkZWQwNGEyYWJlYTEwM2UxNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOhwnS0cA-zLSdsb7bgSzUV0YHhP7g7SLb0d5OsM9Bg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{  \"media_type\": \"movie\", \r\n\r\n\r\n\r\n\r\n \"media_id\": 18,  \r\n\r\n\r\n\r\n\"watchlist\": true}\r\n\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASEURL}}/account/23620944/watchlist",
+          "host": [
+            "{{BASEURL}}"
+          ],
+          "path": [
+            "account",
+            "23620944",
+            "watchlist"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
