@@ -8,11 +8,15 @@ This repository contains automated API test scripts and execution reports for Th
 - **TMDB_API.postman_environment.json**: The environment variables configuration file.
 - **bug-report.html**: The automated test execution HTML report generated using Newman (htmlextra reporter).
 
-## 🛠️ Tools & TechPostman **Postman**: For creating API requests and writing test scripts using  **Newman**: Command-line collection runner for Postman and automated test eNewman Reporter Htmlextra Htmlextra**: For generating detailed, interactive test execution reports.
+## 🛠️ Tools & Technologies
+- **Postman**: For creating API requests and writing test scripts using JavaScript.
+- **Newman**: Command-line collection runner for Postman.
+- **Newman-Reporter-Htmlextra**: For generating detailed, interactive test execution reports.
 
 ## 🚀 How to Run Tests Locally
 
 Make sure Node.js and Newman are installed, then run the following command in your terminal:
 
-`bash
+```bash
 newman run The_Movie_Database_Api.postman_collection.json -e TMDB_API.postman_environment.json -r htmlextra --reporter-htmlextra-export bug-report.html
+```
